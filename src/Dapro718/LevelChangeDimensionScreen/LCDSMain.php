@@ -13,7 +13,6 @@ use pocketmine\math\Vector3;
 
 final class LCDSMain extends PluginBase implements Listener{
 
-    /** @var int[string] $levels*/
     private $levels = [];
     
     public function onEnable(): void{
