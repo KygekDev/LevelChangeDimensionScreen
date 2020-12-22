@@ -13,11 +13,12 @@ use pocketmine\math\Vector3;
 
 final class LCDSMain extends PluginBase implements Listener{
 
-    private static $levels = [];
+    /** @var int[string] $levels*/
+    private $levels = [];
     
     public function onEnable(): void{
         foreach($this->getConfig()->get("levels") as $name=>$id){
-            self::$levels[strtolower($name)] = $id["dimension"];
+            $this->levels[strtolower($name)] = $id["dimension"];
         }
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
@@ -26,10 +27,10 @@ final class LCDSMain extends PluginBase implements Listener{
         $player = $event->getEntity();
         if($player instanceof Player){
             if($event->getTo()->getLevel()->getFolderName() !== $player->getLevel()->getFolderName()){
-                if(isset(self::$levels[strtolower($event->getTo()->getLevel()->getFolderName())])){
+                if(isset($this->levels[strtolower($event->getTo()->getLevel()->getFolderName())])){
                     if(!$player->hasPermission("levelchangedimensionscreen.noscreen")){
                         $pk = new ChangeDimensionPacket();
-                        $pk->dimension = self::$levels[strtolower($event->getTo()->getLevel()->getFolderName())];
+                        $pk->dimension = $this->levels[strtolower($event->getTo()->getLevel()->getFolderName())];
                         $pk->position = new Vector3($event->getTo()->getX(), $event->getTo()->getY(), $event->getTo()->getZ());
                         $pk->respawn = false;
                         $player->sendDataPacket($pk);
