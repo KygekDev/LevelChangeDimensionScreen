@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dapro718\LevelChangeDimensionScreen;
 
 use pocketmine\Player;
-use pocketmine\network\mcpe\protocol\{ChangeDimensionPacket, LevelChunkPacket);
+use pocketmine\network\mcpe\protocol\{ChangeDimensionPacket, LevelChunkPacket};
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityTeleportEvent;
