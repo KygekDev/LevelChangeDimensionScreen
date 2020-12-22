@@ -25,14 +25,14 @@ final class LCDSMain extends PluginBase implements Listener{
     public function onLevelChange(EntityTeleportEvent $event): void{
         $player = $event->getEntity();
         if($player instanceof Player){
-            if($event->getPosition()->getLevel()->getFolderName() !== $player->getLevel()->getFolderName()){
-                if(isset(self::$levels[strtolower($event->getPosition()->getLevel()->getFolderName())])){
+            if($event->getTo()->getLevel()->getFolderName() !== $player->getLevel()->getFolderName()){
+                if(isset(self::$levels[strtolower($event->getTo()->getLevel()->getFolderName())])){
                     if(!$player->hasPermission("levelchangedimensionscreen.noscreen")){
                         $pk = new ChangeDimensionPacket();
                         $pk->dimension = self::$levels[strtolower($event->getPosition()->getLevel()->getFolderName())];
-                        $pk->position = new Vector3($event->getPosition()->getX(), $event->getPosition()->getY(), $event->getPosition()->getZ());
+                        $pk->position = new Vector3($event->getTo()->getX(), $event->getTo()->getY(), $event->getTo()->getZ());
                         $pk->respawn = false;
-                        $player->sendPacket($pk);
+                        $player->sendDataPacket($pk);
                     }
                 }
             }
