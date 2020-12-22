@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dapro718\LevelChangeDimensionScreen;
 
 use pocketmine\Player;
-use pocketmine\network\mcpe\protocol\ChangeDimensionPacket;
+use pocketmine\network\mcpe\protocol\{ChangeDimensionPacket, LevelChunkPacket);
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityTeleportEvent;
@@ -32,6 +32,8 @@ final class LCDSMain extends PluginBase implements Listener{
                         $pk->dimension = $this->levels[strtolower($event->getTo()->getLevel()->getFolderName())];
                         $pk->position = new Vector3($event->getTo()->getX(), $event->getTo()->getY(), $event->getTo()->getZ());
                         $pk->respawn = false;
+                        $player->sendDataPacket($pk);
+                        $pk = LevelChunkPacket::withoutCache((int) intval($event->getTo()->getX()), (int) intval($event->getTo()->getz()), 6, "");
                         $player->sendDataPacket($pk);
                     }
                 }
