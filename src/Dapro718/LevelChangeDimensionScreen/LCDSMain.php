@@ -29,7 +29,7 @@ final class LCDSMain extends PluginBase implements Listener{
                 if(isset(self::$levels[strtolower($event->getTo()->getLevel()->getFolderName())])){
                     if(!$player->hasPermission("levelchangedimensionscreen.noscreen")){
                         $pk = new ChangeDimensionPacket();
-                        $pk->dimension = self::$levels[strtolower($event->getPosition()->getLevel()->getFolderName())];
+                        $pk->dimension = self::$levels[strtolower($event->getTo()->getLevel()->getFolderName())];
                         $pk->position = new Vector3($event->getTo()->getX(), $event->getTo()->getY(), $event->getTo()->getZ());
                         $pk->respawn = false;
                         $player->sendDataPacket($pk);
